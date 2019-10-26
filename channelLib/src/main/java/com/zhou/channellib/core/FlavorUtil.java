@@ -1,4 +1,4 @@
-package com.zhou.channel;
+package com.zhou.channellib.core;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -15,7 +15,7 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
 /**
- * 风味信息写入/读取工具类
+ * 风味读取工具类
  */
 public class FlavorUtil {
     static final String flavorDirName = "flavor";
@@ -100,7 +100,7 @@ public class FlavorUtil {
         System.out.println("输出路径:" + outApkName);
     }
 
-    public static List<String> getStrListFromFile(File f) {
+    static List<String> getStrListFromFile(File f) {
         List<String> strList = new ArrayList<>();
         //逐行读取文件的每一行，最后形成一个List
         FileReader fr = null;
@@ -138,7 +138,7 @@ public class FlavorUtil {
      * @param list2
      * @return
      */
-    public static List<String> calculateListProduct(List<String> list1, List<String> list2) {
+    static List<String> calculateListProduct(List<String> list1, List<String> list2) {
         List<String> result = new ArrayList<>();
         //先处理特殊情况
         if (list1 == null || list1.size() == 0) {

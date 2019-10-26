@@ -1,2 +1,2 @@
-include ':app', ':comm', ':channelLib'
+include ':app', ':comm','channellib'
 rootProject.name='GradleStudy1023'

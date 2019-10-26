@@ -1,4 +1,4 @@
-package com.zhou.channellib.tools;
+package channel.data;
 
 /**
  * Created by Lance on 2017/5/20.
