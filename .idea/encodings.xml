@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="Encoding">
-    <file url="file://$PROJECT_DIR$/app/src/main/java/com/zhou/gradlestudy1023/FlavorUtil.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/lib/src/main/java/com/zhou/lib/ChannelExt.java" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/lib/src/main/java/com/zhou/lib/FlavorUtil.java" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/lib/src/main/java/com/zhou/lib/MyProject.java" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/lib/src/main/java/com/zhou/lib/MyTask.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/channelLib/src/main/java/com/zhou/channellib/Main.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/channelLib/src/main/java/com/zhou/channellib/core/ChannelExt.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/channelLib/src/main/java/com/zhou/channellib/core/MyProject.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/channelLib/src/main/java/com/zhou/channellib/core/MyTask.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/channelLib/src/main/java/com/zhou/channellib/tools/Apk.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/channelLib/src/main/java/com/zhou/channellib/tools/ApkBuilder.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/channelLib/src/main/java/com/zhou/channellib/tools/ApkParser.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/comm/src/main/java/com/zhou/channel/Constants.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/comm/src/main/java/com/zhou/channel/FlavorUtil.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/comm/src/main/java/com/zhou/channel/FlavorV2Util.java" charset="GBK" />
   </component>
 </project>

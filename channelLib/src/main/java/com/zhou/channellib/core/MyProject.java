@@ -1,4 +1,4 @@
-package com.zhou.lib;
+package com.zhou.channellib.core;
 
 import org.gradle.api.Action;
 import org.gradle.api.Plugin;

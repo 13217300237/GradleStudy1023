@@ -1,4 +1,4 @@
-package com.zhou.lib;
+package com.zhou.channellib.core;
 
 /**
  * 自定义的额外信息
