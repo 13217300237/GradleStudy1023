@@ -2,3 +2,4 @@ black
 white
 red
 gray
+orange
