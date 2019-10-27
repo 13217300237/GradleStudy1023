@@ -15,9 +15,8 @@ import channel.data.Constants;
 import channel.data.bean.ApkSigningBlock;
 
 /**
- * Created by Lance on 2017/5/20.
+ * 利用Apk类的对象来构建一个Apk文件
  */
-
 public class ApkBuilder {
 
     public static void generateChannel(String channel, Apk apk, File out) throws

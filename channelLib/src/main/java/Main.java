@@ -13,8 +13,8 @@ public class Main {
         /**
          * 1、初始化:创建输出目录、读取渠道文件
          */
-        File baseApk = new File("makechannel/app-debug.apk");
-        File outDir = new File("makechannel/output");
+        File baseApk = new File("channelLib/app-debug.apk");
+        File outDir = new File("channelLib/output");
         outDir.mkdirs();
         String name = baseApk.getName();
         name = name.substring(0, name.lastIndexOf("."));
