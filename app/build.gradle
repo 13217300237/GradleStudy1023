@@ -19,14 +19,6 @@ android {
     }
 
     signingConfigs{
-        release{
-            storeFile file('hankzhou.jks')
-            storePassword 'zhouhang'
-            keyAlias 'zhouhang'
-            keyPassword 'zhouhang'
-            v1SigningEnabled true
-            v2SigningEnabled true
-        }
         debug{
             storeFile file('hankzhou.jks')
             storePassword 'zhouhang'

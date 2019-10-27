@@ -3,32 +3,34 @@ import java.io.File;
 
 import channel.ApkBuilder;
 import channel.ApkParser;
+import channel.ChannelHelper;
 import channel.data.Apk;
 
 public class Main {
 
+    public static void main(String[] args) {
+        File baseV2Apk = new File("channelLib/app-debug_v2.apk");
+        String channel = "xiaomi-black";
+        try {
+            test(baseV2Apk, channel);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
-    public static void main(String[] args) throws Exception {
+    private static void test(File baseApk, String channel) throws Exception {
+        ChannelHelper.reset();
+        System.out.println("ĞèÒª×¡ÈëµÄÇşµÀĞÅÏ¢ÊÇ:" + channel);
         long l = System.currentTimeMillis();
-        /**
-         * 1ã€åˆå§‹åŒ–:åˆ›å»ºè¾“å‡ºç›®å½•ã€è¯»å–æ¸ é“æ–‡ä»¶
-         */
-        File baseApk = new File("channelLib/app-debug.apk");
-        File outDir = new File("channelLib/output");
-        outDir.mkdirs();
+        File outDir = new File("channelLib/output");//´´½¨Êä³öÄ¿Â¼
+        outDir.mkdirs();//Éú³ÉÊä³öÄ¿Â¼
         String name = baseApk.getName();
         name = name.substring(0, name.lastIndexOf("."));
-        String channel = "zhouzhouxaaaa";
-        /**
-         * 2ã€è§£æAPK(zipæ–‡ä»¶)
-         */
-        Apk apk = ApkParser.parser(baseApk);
-        /**
-         * 3ã€ç”ŸæˆAPK
-         */
-        File file = new File(outDir, name + "-" + channel +
-                ".apk");
+        Apk apk = ApkParser.parser(baseApk);//°ÑapkÎÄ¼ş½âÎö³ÉÎÒÃÇ×Ô¶¨ÒåµÄApkÀàµÄ¶ÔÏó
+        File file = new File(outDir, name + "-" + channel + ".apk");// Éú³ÉAPK
         ApkBuilder.generateChannel(channel, apk, file);
-        System.out.println(System.currentTimeMillis() - l);
+        System.out.println("×¢ÈëÇşµÀĞÅÏ¢ ºÄÊ±£º" + (System.currentTimeMillis() - l) + " MS");
+        System.out.println("½â¶ÁÇşµÀĞÅÏ¢:" + ChannelHelper.getChannel(file.getAbsolutePath()));
+        System.out.println("======================");
     }
 }

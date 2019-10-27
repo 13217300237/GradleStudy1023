@@ -34,26 +34,14 @@ class MyTask extends DefaultTask {
         File outDirFile = new File(channelExt.getOutDir());
         File themeConfigFile = new File(channelExt.getThemeConfigPath());
         outDirFile.mkdirs();
-
         List<String> channelConfigs = FlavorUtil.getStrListFromFile(channelConfigFile);
         List<String> themeConfigs = FlavorUtil.getStrListFromFile(themeConfigFile);
         //然后计算出两个list的乘积(数组A有4个元素，数组B有5个元素，所以乘积一共有20个元素)
         List<String> finalFlavors = FlavorUtil.calculateListProduct(channelConfigs, themeConfigs);
-
-        /**
-         * 这是V1的签名
-         */
         for (String flavorName : finalFlavors) {
-            /**
-             * 2、解析APK(zip文件)
-             */
-            Apk apk = ApkParser.parser(baseFile);
-            /**
-             * 3、生成APK
-             */
-            File file = new File(outDirFile, "app-debug-" + flavorName +
-                    ".apk");
-            ApkBuilder.generateChannel(flavorName, apk, file);
+            Apk apk = ApkParser.parser(baseFile);//2、解析APK(zip文件)
+            File file = new File(outDirFile, "app-debug-" + flavorName + ".apk");
+            ApkBuilder.generateChannel(flavorName, apk, file);//3、生成APK
         }
 
     }

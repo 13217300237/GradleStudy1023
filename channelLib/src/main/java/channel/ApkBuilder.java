@@ -1,7 +1,6 @@
 package channel;
 
 
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -15,15 +14,17 @@ import channel.data.Constants;
 import channel.data.bean.ApkSigningBlock;
 
 /**
- * åˆ©ç”¨Apkç±»çš„å¯¹è±¡æ¥æ„å»ºä¸€ä¸ªApkæ–‡ä»¶
+ * ÀûÓÃApkÀàµÄ¶ÔÏóÀ´¹¹½¨Ò»¸öApkÎÄ¼ş
  */
 public class ApkBuilder {
 
     public static void generateChannel(String channel, Apk apk, File out) throws
             Exception {
         if (apk.isV2()) {
+            System.out.println("ÕâÊÇV2Ç©ÃûµÄapk£¬ÏÖÔÚÓÃV2µÄ·½Ê½À´×¢ÈëÇşµÀĞÅÏ¢");
             generateV2Channel(channel, apk, out);
         } else if (apk.isV1()) {
+            System.out.println("ÕâÊÇV1Ç©ÃûµÄapk£¬ÏÖÔÚÓÃV1µÄ·½Ê½À´×¢ÈëÇşµÀĞÅÏ¢");
             generateV1Channel(channel, apk, out);
         }
     }
@@ -31,24 +32,24 @@ public class ApkBuilder {
     static void generateV1Channel(String channel, Apk apk, File out) throws IOException {
         FileOutputStream fos = new FileOutputStream(out);
 
-        //è·å–ç¬¬ä¸€éƒ¨åˆ†å†…å®¹
+        //»ñÈ¡µÚÒ»²¿·ÖÄÚÈİ
         int cdOffset = apk.getEocd().getCdOffset();
         int cdSize = apk.getEocd().getCdSize();
         RandomAccessFile apkFile = new RandomAccessFile(apk.getFile(), "r");
         byte[] cozeBytes = new byte[cdOffset];
         apkFile.read(cozeBytes);
-        //å†™å…¥åˆ°è¾“å‡ºæ–‡ä»¶
+        //Ğ´Èëµ½Êä³öÎÄ¼ş
         fos.write(cozeBytes);
 
 
-        //å†™å…¥cd
+        //Ğ´Èëcd
         apkFile.seek(cdOffset);
         byte[] cdBytes = new byte[cdSize];
         apkFile.read(cdBytes);
         fos.write(cdBytes);
 
 
-        //å†™å…¥eocd
+        //Ğ´Èëeocd
         ByteBuffer data = apk.getEocd().getData();
         byte[] bytes = new byte[Constants.EOCD_COMMENT_LEN_OFFSET];
         data.get(bytes);
@@ -71,7 +72,7 @@ public class ApkBuilder {
     static void generateV2Channel(String channel, Apk apk, File out) throws Exception {
         FileOutputStream fos = new FileOutputStream(out);
         /**
-         * 1ã€å†™å…¥ç¬¬ä¸€éƒ¨åˆ†å†…å®¹
+         * 1¡¢Ğ´ÈëµÚÒ»²¿·ÖÄÚÈİ
          */
         int v2Size = apk.getApkSigningBlock().getData().capacity();
         int cdOffset = apk.getEocd().getCdOffset();
@@ -80,24 +81,19 @@ public class ApkBuilder {
         RandomAccessFile apkFile = new RandomAccessFile(apk.getFile(), "r");
         byte[] cozeBytes = new byte[coze_len];
         apkFile.read(cozeBytes);
-        //å†™å…¥åˆ°è¾“å‡ºæ–‡ä»¶
+        //Ğ´Èëµ½Êä³öÎÄ¼ş
         fos.write(cozeBytes);
 
         /**
-         * 2ã€å†™å…¥ç­¾åå—
+         * 2¡¢Ğ´ÈëÇ©Ãû¿é
          */
         ApkSigningBlock v2SignBlock = apk.getApkSigningBlock();
         ByteBuffer v2Block = v2SignBlock.getData();
         int capacity = v2Block.capacity();
         byte[] channelBytes = channel.getBytes(Constants.CHARSET);
-        //æ–°ç­¾åå—æ€»å¤§å°
-        int block_size = capacity + 8 + 4 + channelBytes.length;
-        //å¦‚æœå·²ç»å­˜åœ¨äº†æˆ‘ä»¬è¦æ·»åŠ çš„æ¸ é“ä¿¡æ¯çš„id
-        if (v2SignBlock.getPair().containsKey(Constants
-                .APK_SIGNATURE_SCHEME_V2_CHANNEL_ID)) {
-            //è·å–å·²ç»å­˜åœ¨çš„v2æ¸ é“æ•°æ®
-            ByteBuffer v2ChannelValue = v2SignBlock.getPair().get(Constants
-                    .APK_SIGNATURE_SCHEME_V2_CHANNEL_ID);
+        int block_size = capacity + 8 + 4 + channelBytes.length; //ĞÂÇ©Ãû¿é×Ü´óĞ¡
+        if (v2SignBlock.getPair().containsKey(Constants.APK_SIGNATURE_SCHEME_V2_CHANNEL_ID)) {//Èç¹ûÒÑ¾­´æÔÚÁËÎÒÃÇÒªÌí¼ÓµÄÇşµÀĞÅÏ¢µÄid
+            ByteBuffer v2ChannelValue = v2SignBlock.getPair().get(Constants.APK_SIGNATURE_SCHEME_V2_CHANNEL_ID);//»ñÈ¡ÒÑ¾­´æÔÚµÄv2ÇşµÀÊı¾İ
             block_size = block_size - 8 - 4 - v2ChannelValue.capacity();
         }
         ByteBuffer newV2Block = ByteBuffer.allocate(block_size);
@@ -106,25 +102,22 @@ public class ApkBuilder {
         newV2Block.putLong(blockSizeFieldValue);
         Set<Integer> ids = v2SignBlock.getPair().keySet();
         for (Integer id : ids) {
-            //è·³è¿‡å·²ç»å­˜åœ¨çš„æ¸ é“idæ•°æ®
-            if (id != Constants.APK_SIGNATURE_SCHEME_V2_CHANNEL_ID) {
+            if (id != Constants.APK_SIGNATURE_SCHEME_V2_CHANNEL_ID) { //Ìø¹ıÒÑ¾­´æÔÚµÄÇşµÀidÊı¾İ
                 ByteBuffer value = v2SignBlock.getPair().get(id);
                 newV2Block.putLong(4 + value.capacity());
                 newV2Block.putInt(id);
                 newV2Block.put(value);
             }
         }
-        //æ·»åŠ æ¸ é“ä¿¡æ¯
+        //Ìí¼ÓÇşµÀĞÅÏ¢
         newV2Block.putLong(4 + channelBytes.length);
         newV2Block.putInt(Constants.APK_SIGNATURE_SCHEME_V2_CHANNEL_ID);
         newV2Block.put(channelBytes);
-
         newV2Block.putLong(blockSizeFieldValue);
         newV2Block.put(Constants.APK_SIGNING_BLOCK_MAGIC);
         fos.write(newV2Block.array());
-
         /**
-         * 3ã€å†™å…¥cd
+         * 3¡¢Ğ´Èëcd
          */
         int cdSize = apk.getEocd().getCdSize();
         apkFile.seek(cdOffset);
@@ -133,7 +126,7 @@ public class ApkBuilder {
         fos.write(cdBytes);
 
         /**
-         * 4ã€ä¿®æ”¹eocdä¸­çš„å†…å®¹
+         * 4¡¢ĞŞ¸ÄeocdÖĞµÄÄÚÈİ
          */
         byte[] bytes = new byte[16];
         ByteBuffer data = apk.getEocd().getData();
